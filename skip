@@ -1,0 +1,131 @@
+pipeline {
+    agent any
+    
+    parameters{
+        booleanParam(defaultValue: true, description: '', name: 'skip-Frontend-Deploy')
+	booleanParam(defaultValue: true, description: '', name: 'skip-Rest-Deploy')
+	booleanParam(defaultValue: true, description: '', name: 'skip-Backend-Deploy')
+    }
+    stages {
+        stage('Initial Start-Up') {
+            steps {
+                sh 'echo "Intial-Stage"'
+            }
+        }
+        stage('Test_Frontend-CI') {
+
+            when{ 
+                expression { 
+			
+			params.skip-Frontend-Deploy == 'true' 
+
+		} 
+                
+            }
+
+            steps {
+                sh 'echo "Upload Artifacts"'
+            }
+        }
+        stage('Test_Frontend-Deployment') {
+            when{ 
+                expression { 
+			
+			params.skip-Frontend-Deploy == 'true' 
+
+		} 
+                
+            }
+            steps {
+                sh 'echo "Frontend-Deployment Starts"'
+            }
+        }
+         stage('Test_Rest-CI') {
+            steps {
+
+            when{ 
+                expression { 
+			
+			params.skip-Rest-Deploy == 'true' 
+
+		} 
+                
+            }
+
+                sh 'echo "Upload Artifacts"'
+            }
+        }
+        stage('Test_Rest-Deployment') {
+
+            when{ 
+                expression { 
+			
+			params.skip-Rest-Deploy == 'true' 
+
+		} 
+                
+            }
+
+            steps {
+                sh 'echo "Rest-Deployment Starts"'
+            }
+        }
+        stage('Test_TPR-Services-CI') {
+            steps {
+                sh 'echo "Upload Artifacts"'
+            }
+        }
+        stage('Test_TPR-Services Deployment') {
+            steps {
+                sh 'echo "TPR-Services Deployment Started"'
+            }
+        }
+        stage('Test_Backend-CI') {
+
+            when{ 
+                expression { 
+			
+			params.skip-Backend-Deploy == 'true' 
+
+		} 
+                
+            }
+
+            steps {
+                sh 'echo "Upload Artifacts"'
+
+            }
+        }
+        stage('Test_Backend-Deployment') {
+
+	     when{ 
+                expression { 
+			
+			params.skip-Backend-Deploy == 'true' 
+
+		} 
+                
+            }
+
+            steps {
+                sh 'echo "Backend-Deployment Started"'
+            }
+        }
+        stage('Test_Report-CI') {
+            steps {
+                sh 'echo "Upload Artifacts"'
+            }
+        }
+        stage('Test_Report_Deployment') {
+            steps {
+                sh 'echo "Report-Deployment Starts"'
+            }
+        }
+		stage('FrontEnd-Automation') {
+            steps {
+                sh 'echo "Automation Started"'
+
+            }
+        }
+    }
+}
