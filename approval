@@ -1,0 +1,66 @@
+pipeline{
+    agent any
+    
+    options{
+        authorizationMatrix(['com.cloudbees.plugins.credentials.CredentialsProvider.Create:vagrant', 'com.cloudbees.plugins.credentials.CredentialsProvider.Delete:vagrant', 'com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:vagrant', 'com.cloudbees.plugins.credentials.CredentialsProvider.Update:vagrant', 'com.cloudbees.plugins.credentials.CredentialsProvider.View:vagrant', 'hudson.model.Item.Build:vagrant', 'hudson.model.Item.Cancel:vagrant', 'hudson.model.Item.Configure:vagrant', 'hudson.model.Item.Delete:vagrant', 'hudson.model.Item.Discover:vagrant', 'hudson.model.Item.Move:vagrant', 'hudson.model.Item.Read:vagrant', 'hudson.model.Item.Workspace:vagrant', 'hudson.model.Run.Delete:vagrant', 'hudson.model.Run.Replay:vagrant', 'hudson.model.Run.Update:vagrant', 'hudson.plugins.promoted_builds.Promotion.Promote:vagrant', 'hudson.scm.SCM.Tag:vagrant'])
+    }
+
+    triggers {
+        cron('H * * * *')
+    }
+    
+    parameters{
+        
+        string(defaultValue: '', description: '', name: 'abc', trim: false)
+        
+    }
+    
+    stages{
+        stage('Send approval Email'){
+            steps{
+                //build 'Join-job3'
+                emailext (
+                    
+                            subject: "Waiting for your Approval! Job: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                            body: '''${JELLY_SCRIPT,template="html"}
+                            <h2>STARTED: Job '${JOB_NAME} ${BUILD_NUMBER}':</h2>
+                            <h2>Please approve the build '${BUILD_NUMBER}'</h2>
+                            <h3>Buid URL: '${BUILD_URL}/input'</h3>
+                            ''', mimeType: 'text/html', 
+                            to: 'naveen.verma@opstree.com'
+                        )
+                
+                echo "promotion triggered"
+            }
+        }
+        
+        stage('get approval'){
+            steps{
+                
+                script {
+                    
+                            def userInput = false
+                            userInput = input(id: 'Proceed1', message: 'Approve build?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
+                            echo 'userInput: ' + userInput
+
+                            if(userInput == true) {
+                                                    echo "Build has been approved"
+                                                    }
+                                                     
+                            else {
+            
+                                        echo "Action was aborted."
+                                }
+
+                    } 
+        
+            }
+        }
+        
+        stage('Post approval'){
+            steps{
+                echo "done!!"
+            }
+        }
+    }
+}
