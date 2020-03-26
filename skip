@@ -2,128 +2,110 @@ pipeline {
     agent any
     
     parameters{
-        booleanParam(defaultValue: true, description: '', name: 'skip-Frontend-Deploy')
-	booleanParam(defaultValue: true, description: '', name: 'skip-Rest-Deploy')
-	booleanParam(defaultValue: true, description: '', name: 'skip-Backend-Deploy')
+        booleanParam(defaultValue: true, description: '', name: 'skip_Frontend_Deploy')
+	booleanParam(defaultValue: true, description: '', name: 'skip_Rest_Deploy')
+	booleanParam(defaultValue: true, description: '', name: 'skip_Backend_Deploy')
     }
     stages {
         stage('Initial Start-Up') {
             steps {
-                sh 'echo "Intial-Stage"'
+                echo "Intial-Stage"
             }
         }
         stage('Test_Frontend-CI') {
 
-            when{ 
-                expression { 
-			
-			params.skip-Frontend-Deploy == 'true' 
-
-		} 
-                
+            when{
+                expression{
+                    params.skip_frontend_deploy == true
+                }
             }
 
             steps {
-                sh 'echo "Upload Artifacts"'
+                echo "Upload Artifacts"
             }
         }
         stage('Test_Frontend-Deployment') {
-            when{ 
-                expression { 
-			
-			params.skip-Frontend-Deploy == 'true' 
-
-		} 
-                
+            when{
+                expression{
+                    params.skip_frontend_deploy == true
+                }
             }
             steps {
-                sh 'echo "Frontend-Deployment Starts"'
+                echo "Frontend-Deployment Starts"
             }
         }
          stage('Test_Rest-CI') {
             steps {
 
-            when{ 
-                expression { 
-			
-			params.skip-Rest-Deploy == 'true' 
-
-		} 
-                
+            when{
+                expression{
+                    params.skip_Rest_deploy == true
+                }
             }
 
-                sh 'echo "Upload Artifacts"'
+                echo "Upload Artifacts"
             }
         }
         stage('Test_Rest-Deployment') {
 
-            when{ 
-                expression { 
-			
-			params.skip-Rest-Deploy == 'true' 
-
-		} 
-                
+            when{
+                expression{
+                    params.skip_Rest_deploy == true
+                }
             }
 
             steps {
-                sh 'echo "Rest-Deployment Starts"'
+                echo "Rest-Deployment Starts"
             }
         }
         stage('Test_TPR-Services-CI') {
             steps {
-                sh 'echo "Upload Artifacts"'
+                echo "Upload Artifacts"
             }
         }
         stage('Test_TPR-Services Deployment') {
             steps {
-                sh 'echo "TPR-Services Deployment Started"'
+                echo "TPR-Services Deployment Started"
             }
         }
         stage('Test_Backend-CI') {
 
-            when{ 
-                expression { 
-			
-			params.skip-Backend-Deploy == 'true' 
-
-		} 
-                
+            when{
+                expression{
+                    params.skip_Backend_deploy == true
+                }
             }
 
             steps {
-                sh 'echo "Upload Artifacts"'
+                echo "Upload Artifacts"
 
             }
         }
         stage('Test_Backend-Deployment') {
 
-	     when{ 
-                expression { 
-			
-			params.skip-Backend-Deploy == 'true' 
-
-		} 
-                
+            when{
+                expression{
+                    params.skip_Backend_deploy == true
+                }
             }
 
             steps {
-                sh 'echo "Backend-Deployment Started"'
+                echo "Backend-Deployment Started"
             }
         }
         stage('Test_Report-CI') {
             steps {
-                sh 'echo "Upload Artifacts"'
+                echo "Upload Artifacts"
             }
         }
         stage('Test_Report_Deployment') {
             steps {
-                sh 'echo "Report-Deployment Starts"'
+                echo "Report-Deployment Starts"
             }
         }
 		stage('FrontEnd-Automation') {
             steps {
-                sh 'echo "Automation Started"'
+                echo "Automation Started"
 
             }
         }
