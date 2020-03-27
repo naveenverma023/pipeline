@@ -1,4 +1,4 @@
-pipeline {
+pipeline{
     agent any
     
     parameters{
@@ -6,107 +6,107 @@ pipeline {
 	booleanParam(defaultValue: true, description: '', name: 'skip_Rest_Deploy')
 	booleanParam(defaultValue: true, description: '', name: 'skip_Backend_Deploy')
     }
-    stages {
-        stage('Initial Start-Up') {
-            steps {
+    
+    stages{
+        stage('Initial Start-Up'){
+            steps{
                 echo "Intial-Stage"
             }
         }
-        stage('Test_Frontend-CI') {
-
+        
+        stage('Test_Frontend-CI'){
             when{
                 expression{
-                    params.skip_frontend_deploy == true
+                    params.skip_Frontend_Deploy == true
                 }
             }
-
-            steps {
+            steps{
                 echo "Upload Artifacts"
             }
         }
-        stage('Test_Frontend-Deployment') {
+        
+        stage('Test_Frontend-Deployment'){
             when{
                 expression{
-                    params.skip_frontend_deploy == true
+                    params.skip_Frontend_Deploy == true
                 }
             }
-            steps {
+            steps{
                 echo "Frontend-Deployment Starts"
             }
         }
-         stage('Test_Rest-CI') {
-            steps {
-
+        
+        stage('Test_Rest-CI'){
             when{
                 expression{
-                    params.skip_Rest_deploy == true
+                    params.skip_Rest_Deploy == true
                 }
             }
-
+            steps{
                 echo "Upload Artifacts"
             }
         }
-        stage('Test_Rest-Deployment') {
-
+        
+        stage('Test_Rest-Deployment'){
             when{
                 expression{
-                    params.skip_Rest_deploy == true
+                    params.skip_Rest_Deploy == true
                 }
             }
-
-            steps {
+            steps{
                 echo "Rest-Deployment Starts"
             }
         }
-        stage('Test_TPR-Services-CI') {
-            steps {
+        
+        stage('Test_TPR-Services-CI'){
+            steps{
                 echo "Upload Artifacts"
             }
         }
-        stage('Test_TPR-Services Deployment') {
-            steps {
+        
+        stage('Test_TPR-Services Deployment'){
+            steps{
                 echo "TPR-Services Deployment Started"
             }
         }
-        stage('Test_Backend-CI') {
-
+        
+        stage('Test_Backend-CI'){
             when{
                 expression{
-                    params.skip_Backend_deploy == true
+                    params.skip_Backend_Deploy == true
                 }
             }
-
-            steps {
+            steps{
                 echo "Upload Artifacts"
-
             }
         }
-        stage('Test_Backend-Deployment') {
-
+        
+        stage('Test_Backend-Deployment'){
             when{
                 expression{
-                    params.skip_Backend_deploy == true
+                    params.skip_Backend_Deploy == true
                 }
             }
-
-            steps {
+            steps{
                 echo "Backend-Deployment Started"
             }
         }
-        stage('Test_Report-CI') {
-            steps {
+        
+        stage('Test_Report-CI'){
+            steps{
                 echo "Upload Artifacts"
             }
         }
-        stage('Test_Report_Deployment') {
-            steps {
+        
+        stage('Test_Report_Deployment'){
+            steps{
                 echo "Report-Deployment Starts"
             }
         }
-		stage('FrontEnd-Automation') {
-            steps {
+        
+        stage('FrontEnd-Automation'){
+            steps{
                 echo "Automation Started"
-
             }
         }
     }
